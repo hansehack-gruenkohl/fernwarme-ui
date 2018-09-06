@@ -6,7 +6,7 @@ const RawMap = withScriptjs(withGoogleMap(({ sensors, onSensorClick }) => (
                defaultCenter={{ lat: 53.849174, lng: 10.6722478 }}>
 
         {sensors.map((sensor, i) => (
-            <Marker position={sensor.position}
+            <Marker position={{lat: sensor.latitude, lng: sensor.longitude}}
                     icon={{ url: markerIconUrl(sensor) }}
                     clickable={true}
                     onClick={() => onSensorClick(i)}
@@ -31,14 +31,13 @@ export default function Map({ style, ...rest }) {
 }
 
 function markerIconUrl(sensor) {
-    const feeds = sensor.metrics.feeds
-    const lastFeed = feeds[feeds.length - 1]
-    const waterFlow = Number(lastFeed.field1)
+    const measurements = sensor.measurements
+    const lastMeasurement = measurements[0] || {}
+    const waterFlow = lastMeasurement.value
 
     const redThreshold = 0;
     const yellowThreshold = 30;
     const greenThreshold = 80;
-    const noConsumption = 0;
     
     if (waterFlow > redThreshold && waterFlow < yellowThreshold) {
         return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
@@ -46,7 +45,6 @@ function markerIconUrl(sensor) {
     if (waterFlow >= yellowThreshold && waterFlow < greenThreshold) {
         return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
     }
-    if (waterFlow === noConsumption || waterFlow >= greenThreshold) {
-        return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-    }
+
+    return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
 }

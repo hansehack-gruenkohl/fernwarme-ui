@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SensorMetrics from './SensorMetrics';
 import Map from './Map';
-import { config } from './config';
+import {getSensors} from './SensorClient';
     
 export default class App extends Component {
 
@@ -12,21 +12,15 @@ export default class App extends Component {
 
     componentDidMount() {
         this.load()
-
-        this.intervalJob = setInterval(this.load.bind(this), 1000*10)
+        this.intervalJob = setInterval(this.load.bind(this), 1000)
     }
 
-    load() {
-        const requests = config.map(sensor => {
-            return fetch(sensor.url)
-                .then(response => response.json())
-                .then(response => ({ ...sensor, metrics: response }))
-        })
+    async load() {
+        const sensors = await getSensors()
 
-        Promise.all(requests).then(sensors => {
-            this.setState({
-                sensors
-            })
+        console.log(sensors)
+        this.setState({
+            sensors
         })
     }
 
@@ -47,7 +41,7 @@ export default class App extends Component {
             <div style={{ display: 'flex', height: '100vh' }}>
                 <Map sensors={sensors} onSensorClick={this.handleSensorClick} style={{flex: 1}}></Map>
                 { selectedSensor &&
-                    <SensorMetrics feeds={selectedSensor.metrics.feeds} style={{ width: '30%' }}/>
+                    <SensorMetrics measurements={selectedSensor.measurements} style={{ width: '30%' }}/>
                 }
             </div>
         );

@@ -1,13 +1,14 @@
 import React from 'react';
 import { Chart } from "react-google-charts";
 
-export default function SensorMetrics({ feeds, style }) {
+export default function SensorMetrics({ measurements, style }) {
+    console.log('SensorMetrics', measurements)
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', ...style}}>
             <Chart chartType="Gauge"
                    data={[
                        ["L/h"],
-                       gaugeData(feeds)
+                       gaugeData(measurements)
                    ]}
                    options={{ redFrom: 0, redTo: 30, yellowFrom: 30, yellowTo: 70 }}
                    style={{marginTop: 50, marginBottom: 20 }} />
@@ -15,7 +16,7 @@ export default function SensorMetrics({ feeds, style }) {
             <Chart chartType="AreaChart"
                    data={[
                        ['Time', 'L/h'],
-                       ...historyData(feeds)
+                       ...historyData(measurements)
                    ]}
                    options={{
                        title: 'History',
@@ -29,16 +30,16 @@ export default function SensorMetrics({ feeds, style }) {
     )
 }
 
-function gaugeData(feeds) {
-    const lastFeed = feeds[feeds.length-1]
+function gaugeData(measurements) {
+    const lastMeasurement = measurements[0] || {}
     return [
-        Number(lastFeed.field1)
+        lastMeasurement.value || 0
     ]
 }
 
-function historyData(feeds) {
-    return feeds.map(f => {
-        const date = new Date(f.created_at)
-        return [date, Number(f.field1)]
+function historyData(measurements) {
+    return measurements.map(m => {
+        const date = new Date(m.measuredAt)
+        return [date, m.value || 0]
     })
 }
