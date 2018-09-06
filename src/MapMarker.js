@@ -8,7 +8,7 @@ export default function MapMarker({ sensor, selected, onClick }) {
                                 selected ? 32 : 30)
     
     const labelStyle = {
-        backgroundColor: "white",
+        backgroundColor: sensor.underSupplied ? "#fd5656" : "white",
         fontSize: "16px",
         padding: "5px",
         border: `${selected ? 3 : 1}px solid ${selected ? 'blue' : 'grey'}`, 
