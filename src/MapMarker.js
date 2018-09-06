@@ -4,14 +4,14 @@ import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithL
 export default function MapMarker({ sensor, selected, onClick }) {
 
     const labelPosition = new window.google.maps.Point(
-                                selected ? -10 : -12,
+                                selected ? -15 : -17,
                                 selected ? 32 : 30)
     
     const labelStyle = {
         backgroundColor: "white",
         fontSize: "16px",
         padding: "5px",
-        border: `${selected ? 3 : 1}px solid grey`, 
+        border: `${selected ? 3 : 1}px solid ${selected ? 'blue' : 'grey'}`, 
         borderRadius: "3px",
         boxShadow: "2px 2px #eee"
     }
@@ -33,19 +33,8 @@ export default function MapMarker({ sensor, selected, onClick }) {
 }
 
 function markerIconUrl(sensor) {
-    const measurements = sensor.measurements
-    const lastMeasurement = measurements[0] || {}
-    const waterFlow = lastMeasurement.value
-
-    const redThreshold = 0;
-    const yellowThreshold = 30;
-    const greenThreshold = 80;
-    
-    if (waterFlow > redThreshold && waterFlow < yellowThreshold) {
+    if (sensor.underSupplied) {
         return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-    }
-    if (waterFlow >= yellowThreshold && waterFlow < greenThreshold) {
-        return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
     }
 
     return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
