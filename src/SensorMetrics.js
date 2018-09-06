@@ -1,21 +1,22 @@
 import React from 'react';
 import { Chart } from "react-google-charts";
 
-export default function SensorMetrics({ measurements, style }) {
+export default function SensorMetrics({ sensor, style }) {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', ...style}}>
+            <h2 style={{ marginTop: 50 }}>{sensor.name}</h2>
             <Chart chartType="Gauge"
                    data={[
                        ["L/h"],
-                       gaugeData(measurements)
+                       gaugeData(sensor.measurements)
                    ]}
                    options={{ redFrom: 0, redTo: 30, yellowFrom: 30, yellowTo: 70 }}
-                   style={{marginTop: 50, marginBottom: 20 }} />
+                   style={{marginTop: 30, marginBottom: 20 }} />
             
             <Chart chartType="AreaChart"
                    data={[
                        ['Time', 'L/h'],
-                       ...historyData(measurements)
+                       ...historyData(sensor.measurements)
                    ]}
                    options={{
                        title: 'History',

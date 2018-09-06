@@ -1,32 +1,16 @@
 import React from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps";
-import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
+import MapMarker from "./MapMarker";
 
 const RawMap = withScriptjs(withGoogleMap(({ sensors, selectedSensor = {}, onSensorClick }) => (
-    <GoogleMap defaultZoom={13}
-               defaultCenter={{ lat: 53.849174, lng: 10.6722478 }}>
+    <GoogleMap defaultZoom={14}
+               defaultCenter={{ lat: 53.8554374, lng: 10.6783012 }}>
 
-        {sensors.map((sensor, i) => (
-            <MarkerWithLabel position={{lat: sensor.latitude, lng: sensor.longitude}}
-                             icon={{ url: markerIconUrl(sensor) }}
-                             labelAnchor={new window.google.maps.Point(-10, 30)}
-                             labelStyle={{
-                                 backgroundColor: "white",
-                                 fontSize: "16px",
-                                 padding: "5px",
-                                 border: `${sensor.sensorId === selectedSensor.sensorId ? 3 : 1}px solid grey`, 
-                                 borderRadius: "3px",
-                                 boxShadow: "2px 2px #eee"
-                             }}
-                             clickable={true}
-                             onClick={() => onSensorClick(i)}
-                             key={sensor.url}>
-                <div>
-                    {(sensor.measurements[0] || {}).value} l/h
-
-                    {sensor.badSpot && <span> (SP)</span>}
-                </div>
-            </MarkerWithLabel>
+        {sensors.map(sensor => (
+            <MapMarker sensor={sensor}
+                       selected={sensor.sensorId === selectedSensor.sensorId}
+                       onClick={onSensorClick}
+                       key={sensor.sensorId} />
         ))}
     </GoogleMap>
 )))
@@ -44,23 +28,4 @@ export default function Map({ style, ...rest }) {
             />
         </div>
     )
-}
-
-function markerIconUrl(sensor) {
-    const measurements = sensor.measurements
-    const lastMeasurement = measurements[0] || {}
-    const waterFlow = lastMeasurement.value
-
-    const redThreshold = 0;
-    const yellowThreshold = 30;
-    const greenThreshold = 80;
-    
-    if (waterFlow > redThreshold && waterFlow < yellowThreshold) {
-        return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-    }
-    if (waterFlow >= yellowThreshold && waterFlow < greenThreshold) {
-        return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
-    }
-
-    return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
 }

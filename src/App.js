@@ -7,7 +7,7 @@ export default class App extends Component {
 
     state = {
         sensors: null,
-        selectedSensorIndex: null
+        selectedSensorId: null
     }
 
     componentDidMount() {
@@ -24,24 +24,28 @@ export default class App extends Component {
         })
     }
 
-    handleSensorClick = (sensorIndex) => {
+    handleSensorClick = (sensorId) => {
         this.setState({
-            selectedSensorIndex: sensorIndex
+            selectedSensorId: sensorId
         })
     }
 
     render() {
-        const {sensors, selectedSensorIndex} = this.state
+        const {sensors, selectedSensorId} = this.state
         if (!sensors) {
             return null;
         }
-        const selectedSensor = sensors[selectedSensorIndex]
+        const selectedSensor = sensors.filter(s => s.sensorId === selectedSensorId)[0]
 
         return (
             <div style={{ display: 'flex', height: '100vh' }}>
-                <Map sensors={sensors} selectedSensor={selectedSensor} onSensorClick={this.handleSensorClick} style={{flex: 1}} />
+                <Map sensors={sensors}
+                     selectedSensor={selectedSensor}
+                     onSensorClick={this.handleSensorClick}
+                     style={{flex: 1}} />
+
                 { selectedSensor &&
-                    <SensorMetrics measurements={selectedSensor.measurements} style={{ width: '30%' }}/>
+                    <SensorMetrics sensor={selectedSensor} style={{ width: '30%' }}/>
                 }
             </div>
         );
