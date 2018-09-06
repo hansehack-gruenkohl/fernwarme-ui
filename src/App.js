@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SensorMetrics from './SensorMetrics';
 import Map from './Map';
-import {getSensors} from './SensorClient';
+import {loadSensorsWithMeasurements} from './SensorClient';
     
 export default class App extends Component {
 
@@ -16,7 +16,7 @@ export default class App extends Component {
     }
 
     async load() {
-        const sensors = await getSensors()
+        const sensors = await loadSensorsWithMeasurements()
 
         console.log(sensors)
         this.setState({
@@ -39,7 +39,7 @@ export default class App extends Component {
 
         return (
             <div style={{ display: 'flex', height: '100vh' }}>
-                <Map sensors={sensors} onSensorClick={this.handleSensorClick} style={{flex: 1}}></Map>
+                <Map sensors={sensors} selectedSensor={selectedSensor} onSensorClick={this.handleSensorClick} style={{flex: 1}} />
                 { selectedSensor &&
                     <SensorMetrics measurements={selectedSensor.measurements} style={{ width: '30%' }}/>
                 }

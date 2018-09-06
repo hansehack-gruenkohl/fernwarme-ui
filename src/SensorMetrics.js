@@ -2,7 +2,6 @@ import React from 'react';
 import { Chart } from "react-google-charts";
 
 export default function SensorMetrics({ measurements, style }) {
-    console.log('SensorMetrics', measurements)
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', ...style}}>
             <Chart chartType="Gauge"
