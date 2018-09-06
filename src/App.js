@@ -35,7 +35,7 @@ export default class App extends Component {
         if (!sensors) {
             return null;
         }
-        const selectedSensor = sensors.filter(s => s.sensorId === selectedSensorId)[0]
+        const selectedSensor = sensors.filter(s => s.sensorId === selectedSensorId)[0] || sensors[0]
 
         return (
             <div style={{ display: 'flex', height: '100vh' }}>
