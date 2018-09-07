@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SensorMetrics from './SensorMetrics';
 import Map from './Map';
 import {loadSensorsWithMeasurements} from './SensorClient';
+import LoadingScreen from './LoadingScreen';
     
 export default class App extends Component {
 
@@ -40,8 +41,9 @@ export default class App extends Component {
     render() {
         const {sensors, selectedSensorId} = this.state
         if (!sensors) {
-            return null;
+            return <LoadingScreen />
         }
+
         const selectedSensor = sensors.filter(s => s.sensorId === selectedSensorId)[0] || sensors[0]
 
         return (
