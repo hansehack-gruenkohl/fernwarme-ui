@@ -1,4 +1,4 @@
-const baseUrl = 'http://10.250.252.68:8080'
+const baseUrl = process.env.REACT_APP_BASE_URL
 
 export async function loadSensorsWithMeasurements() {
     const sensors = await loadSensors()
