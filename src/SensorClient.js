@@ -10,11 +10,11 @@ export async function loadSensorsWithMeasurements() {
     })
 
     const measurements = await loadMeasurements()
-    
+
     measurements.forEach(m => {
-        const sensor = sensorByIdMap[m.sensorId]
-        sensor.measurements.push(m)
-    })
+            const sensor = sensorByIdMap[m.sensorId]
+            sensor.measurements.push(m)
+        })
 
     return sensors
 }
@@ -26,7 +26,7 @@ async function loadSensors() {
 }
 
 async function loadMeasurements() {
-    const sensorDatasResponse = await fetch(`${baseUrl}/sensorDatas/?size=1000&sort=measuredAt,desc`)
+    const sensorDatasResponse = await fetch(`${baseUrl}/sensorDatas/?size=100&sort=measuredAt,desc`)
     const sensorDatas = await sensorDatasResponse.json()
     return sensorDatas._embedded.sensorDatas
 }
