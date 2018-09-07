@@ -18,7 +18,14 @@ export default class App extends Component {
     async load() {
         const sensors = await loadSensorsWithMeasurements()
 
-        console.log(sensors)
+        if(sensors.filter((sensor) => sensor.underSupplied).length > 0){
+            (new Audio('/beep.mp3')).play().catch(error => {
+                // Catch the promoise erroring out, because chrome prevents
+                // the browser from playing audio if the user did not interact
+                // with the window first.
+                // console.log('Auto play was prevented.');
+            });
+        }
         this.setState({
             sensors
         })
