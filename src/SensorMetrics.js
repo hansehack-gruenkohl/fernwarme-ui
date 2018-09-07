@@ -10,7 +10,7 @@ export default function SensorMetrics({ sensor, style }) {
                        ["L/h"],
                        gaugeData(sensor.measurements)
                    ]}
-                   options={{ redFrom: 0, redTo: 30, yellowFrom: 30, yellowTo: 70 }}
+                   options={{ redFrom: 0, redTo: 20, yellowFrom: 20, yellowTo: 40, greenFrom: 20, greenTo: 200, max: 200 }}
                    style={{marginBottom: 20 }} />
             
             <Chart chartType="AreaChart"
