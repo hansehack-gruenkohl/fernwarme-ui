@@ -44,7 +44,7 @@ export default class App extends Component {
             return <LoadingScreen />
         }
 
-        const selectedSensor = sensors.filter(s => s.sensorId === selectedSensorId)[0] || sensors[0]
+        const selectedSensor = sensors.filter(s => s.sensorId === selectedSensorId)[0]
 
         return (
             <div style={{ display: 'flex', height: '100vh' }}>
