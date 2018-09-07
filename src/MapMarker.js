@@ -34,8 +34,8 @@ export default function MapMarker({ sensor, selected, onClick }) {
 
 function markerIconUrl(sensor) {
     if (sensor.underSupplied) {
-        return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+        return 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
     }
 
-    return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+    return 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
 }
