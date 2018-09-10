@@ -21,7 +21,7 @@ export default function Map({ style, ...rest }) {
             <RawMap
                 {...rest}
                 isMarkerShown
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs8SAKGsZPB_TLjRVRkjcdFP4LrzXzcbI&v=3.exp&libraries=geometry,drawing,places"
+                googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={<div style={{ height: `100%` }} />}
                 mapElement={<div style={{ height: `100%` }} />}
