@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SensorMetrics from './SensorMetrics';
 import Map from './Map';
-import {loadSensorsWithMeasurements} from './SensorClient';
+import {loadSensors, loadBadSpot} from './SensorClient';
 import LoadingScreen from './LoadingScreen';
     
 export default class App extends Component {
@@ -17,7 +17,8 @@ export default class App extends Component {
     }
 
     async load() {
-        const sensors = await loadSensorsWithMeasurements()
+        const sensors = await loadSensors()
+        const badSpot = await loadBadSpot()
 
         if(sensors.filter((sensor) => sensor.underSupplied).length > 0){
             (new Audio('/beep.mp3')).play().catch(error => {
@@ -28,7 +29,8 @@ export default class App extends Component {
             });
         }
         this.setState({
-            sensors
+          sensors,
+          badSpot
         })
     }
 
@@ -39,19 +41,21 @@ export default class App extends Component {
     }
 
     render() {
-        const {sensors, selectedSensorId} = this.state
+        const {sensors,badSpot, selectedSensorId} = this.state
         if (!sensors) {
             return <LoadingScreen />
         }
 
+        const badSpotSensor = sensors.filter(s => s.sensorId === badSpot.sensor.sensorId)[0]
         const selectedSensor = sensors.filter(s => s.sensorId === selectedSensorId)[0]
 
         return (
             <div style={{ display: 'flex', height: '100vh' }}>
-                <Map sensors={sensors}
-                     selectedSensor={selectedSensor}
-                     onSensorClick={this.handleSensorClick}
-                     style={{flex: 1}} />
+              <Map    sensors={sensors}
+                      badSpotSensor={badSpotSensor}
+                      selectedSensor={selectedSensor}
+                      onSensorClick={this.handleSensorClick}
+                      style={{flex: 1}} />
 
                 { selectedSensor &&
                     <SensorMetrics sensor={selectedSensor} style={{ width: '30%' }}/>

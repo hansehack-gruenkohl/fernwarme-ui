@@ -2,20 +2,24 @@ import React from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps";
 import MapMarker from "./MapMarker";
 
-const RawMap = withScriptjs(withGoogleMap(({ sensors, selectedSensor = {}, onSensorClick }) => (
+const RawMap = withScriptjs(withGoogleMap(({ sensors, badSpotSensor = {}, selectedSensor = {}, onSensorClick }) => (
+
     <GoogleMap defaultZoom={14}
                defaultCenter={{ lat: 53.8554374, lng: 10.6783012 }}>
 
-        {sensors.map(sensor => (
-            <MapMarker sensor={sensor}
-                       selected={sensor.sensorId === selectedSensor.sensorId}
-                       onClick={onSensorClick}
-                       key={sensor.sensorId} />
-        ))}
+               {sensors.map(sensor =>( 
+               <MapMarker sensor={sensor}
+                 badSpot={sensor.sensorId === badSpotSensor.sensorId}
+                 selected={sensor.sensorId === selectedSensor.sensorId}
+                 onClick={onSensorClick}
+                 key={sensor.sensorId} />
+
+               ))}
     </GoogleMap>
 )))
 
 export default function Map({ style, ...rest }) {
+  console.log(rest)
     return (
         <div style={style}>
             <RawMap

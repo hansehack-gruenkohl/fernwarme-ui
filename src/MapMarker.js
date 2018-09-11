@@ -1,14 +1,14 @@
 import React from 'react';
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
 
-export default function MapMarker({ sensor, selected, onClick }) {
+export default function MapMarker({ sensor, badSpot, selected, onClick }) {
 
     const labelPosition = new window.google.maps.Point(
                                 selected ? -15 : -17,
                                 selected ? 32 : 30)
     
     const labelStyle = {
-        backgroundColor: sensor.underSupplied ? "#fd5656" : "white",
+        backgroundColor: "white",
         fontSize: "16px",
         padding: "5px",
         border: `${selected ? 3 : 1}px solid ${selected ? 'blue' : 'grey'}`, 
@@ -25,8 +25,7 @@ export default function MapMarker({ sensor, selected, onClick }) {
                         onClick={() => onClick(sensor.sensorId)}
                         key={sensor.url}>
             <div>
-                {(sensor.measurements[0] || {}).value} l/h
-                {sensor.badSpot && <span> (SP)</span>}
+              {(sensor.lastSensorData || {}).value} mBar {badSpot && <span>(SP)</span>}
             </div>
         </MarkerWithLabel>
     )
