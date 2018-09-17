@@ -20,7 +20,6 @@ export default class Dashboard extends React.Component {
         const sensors = await loadSensors()
         const badSpot = await loadBadSpot()
 
-        console.log(badSpot)
         if(badSpot.underSupplied){
             (new Audio('/beep.mp3')).play().catch(error => {
                 // Catch the promoise erroring out, because chrome prevents

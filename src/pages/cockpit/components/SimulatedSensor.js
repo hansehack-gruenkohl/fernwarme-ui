@@ -7,19 +7,23 @@ class SimulatedSensor extends React.Component {
 
   constructor(props){
     super(props)
-    this.onChange = this.onChange.bind(this)
-    this.state = { sensorId: props.sensorId, value : 0}
+    this.state = { id: props.id, value : 0}
   }
 
-  onChange(event){
-    this.setState({value: event.target.value});
+  onValueChange = (event) => {
+    this.setState({
+      id: this.state.id,
+      value: event.target.value
+    })
+
+    this.props.onSensorValueChanged(event)
   }
 
   render() {
     return <div>
       <FormControl>
         <InputLabel htmlFor="sensor-name">Rathaus Lübeck</InputLabel>
-        <Input id={this.state.id} value={this.state.value} onChange={this.onChange} />
+        <Input id={this.state.id} value={this.state.value} onChange={this.onValueChange} />
       </FormControl>
     </div>
   }
