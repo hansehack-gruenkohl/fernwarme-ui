@@ -1,30 +1,19 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import SimulatedSensor from './components/SimulatedSensor';
 import {sendSensorData, loadSensors} from '../../services/SensorClient';
 
-const styles = theme => ({
-  container: {
-    display: 'grid',
-    gridTemplateColumns: '100%',
-    gridGap: `${theme.spacing.unit * 3}px`,
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-});
+import styles from './Cockpit.css'
 
 class Cockpit extends React.Component {
 
   constructor(props){
     super(props)
     this.state ={
-      sensors: [] 
+      sensors: [],
+      runSimulation: false
     } 
     this.onSensorValueChanged.bind(this)
   }
@@ -46,23 +35,32 @@ class Cockpit extends React.Component {
     this.setState({ sensors: sensors})
   }
 
+  onSimulationChange = (event) => {
+    this.setState({runSimulation: event.target.checked })
+  }
+
   async simulateSensorData(){
     this.state.sensors.forEach(sensor => sendSensorData(sensor.id, sensor.value))
   }
 
   render() {
     return <div>
-      <Typography variant="subheading" gutterBottom>
-        Pressure simulation
-      </Typography>
-      <Grid container spacing={16} justify="center">
-        {
-        this.state.sensors.map( (sensor) => 
-        <Grid key={sensor.id} item xs={2}> <SimulatedSensor id={sensor.id} onSensorValueChanged={this.onSensorValueChanged} /> </Grid> )
-        }
-      </Grid>
+      <div className="sensors">
+        <div>
+          <FormControlLabel control={
+            <Switch value={this.state.simulate} onChange={this.onSimulationChange} />
+            } label="Simulate sensor data">
+          </FormControlLabel>
+        </div>
+        <div>
+          {
+          this.state.sensors.map( (sensor) => 
+          <SimulatedSensor id={sensor.id} disabled={!this.state.runSimulation} onSensorValueChanged={this.onSensorValueChanged} /> )
+          }
+        </div>
+      </div>
     </div>
     }
 }
 
-export default withStyles(styles)(Cockpit);
+export default Cockpit;

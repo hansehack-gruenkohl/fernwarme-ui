@@ -23,7 +23,7 @@ class SimulatedSensor extends React.Component {
     return <div>
       <FormControl>
         <InputLabel htmlFor="sensor-name">Rathaus Lübeck</InputLabel>
-        <Input id={this.state.id} value={this.state.value} onChange={this.onValueChange} />
+        <Input id={this.state.id.toString()} value={this.state.value} disabled={this.props.disabled} onChange={this.onValueChange} />
       </FormControl>
     </div>
   }
