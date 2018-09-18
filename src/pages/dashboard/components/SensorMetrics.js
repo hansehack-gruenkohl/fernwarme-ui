@@ -8,7 +8,7 @@ export default function SensorMetrics({ sensor, style }) {
             <Chart chartType="Gauge"
                    data={[
                        ["L/h"],
-                       gaugeData([])
+                       gaugeData(sensor.sensorData)
                    ]}
                    options={{ redFrom: 0, redTo: 20, greenFrom: 20, greenTo: 100, max: 100 }}
                    style={{marginBottom: 20 }} />
@@ -16,7 +16,7 @@ export default function SensorMetrics({ sensor, style }) {
             <Chart chartType="AreaChart"
                    data={[
                        ['Time', 'L/h'],
-                       ...historyData([])
+                       ...historyData(sensor.sensorData)
                    ]}
                    options={{
                        title: 'History',
