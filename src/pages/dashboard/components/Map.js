@@ -19,7 +19,6 @@ const RawMap = withScriptjs(withGoogleMap(({ sensors, badSpotSensor = {}, select
 )))
 
 export default function Map({ style, ...rest }) {
-  console.log(rest)
     return (
         <div style={style}>
             <RawMap

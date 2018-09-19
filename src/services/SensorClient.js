@@ -10,6 +10,11 @@ export async function loadBadSpot() {
     return await rawResponse.json()
 }
 
+export async function loadMeasurementsForSensor(sensorId) {
+    const rawResponse = await fetch(`${baseUrl}/sensors/${sensorId}/measurements`)
+    return await rawResponse.json()
+}
+
 export async function sendSensorData(sensorId, value) {
   const body = {
     'sensorId': sensorId,

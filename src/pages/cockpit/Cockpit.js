@@ -5,8 +5,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import SimulatedSensor from './components/SimulatedSensor';
 import {sendSensorData, loadSensors} from '../../services/SensorClient';
 
-import styles from './Cockpit.css'
-
 class Cockpit extends React.Component {
 
   constructor(props){
@@ -30,7 +28,7 @@ class Cockpit extends React.Component {
 
   onSensorValueChanged = (event) => {
     const sensors = [...this.state.sensors]
-    sensors.find(s => s.id === parseInt(event.target.id)).value = event.target.value
+    sensors.find(s => s.id === parseInt(event.target.id, 10)).value = event.target.value
 
     this.setState({ sensors: sensors})
   }
