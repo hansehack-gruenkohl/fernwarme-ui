@@ -24,6 +24,11 @@ const styles = theme => ({
     marginTop: theme.spacing.unit
   },
 
+  heading: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+  },
+
   cockpit: {
     marginTop: '100px',
     marginLeft: '100px',
@@ -89,7 +94,7 @@ class Cockpit extends React.Component {
 
     return <div>
       <Paper className={classes.cockpit}>
-        <Typography variant="headline" component="h3">
+        <Typography className={classes.heading} variant="headline" component="h3">
           Remote heating grid control
         </Typography>
         <div>
