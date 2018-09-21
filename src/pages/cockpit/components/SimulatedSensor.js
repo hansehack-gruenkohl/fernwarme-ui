@@ -1,13 +1,28 @@
 import React from 'react';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
+
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  sensor: { 
+    width: 500, 
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+  },
+
+  simulate: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+  }
+});
 
 class SimulatedSensor extends React.Component {
 
   constructor(props){
     super(props)
-    this.state = { id: props.id, value : 0}
+
+    this.state = { id: props.id, name: this.props.name, value : 0}
   }
 
   onValueChange = (event) => {
@@ -20,13 +35,19 @@ class SimulatedSensor extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return <div>
       <FormControl>
-        <InputLabel htmlFor="sensor-name">Rathaus Lübeck</InputLabel>
-        <Input id={this.state.id.toString()} value={this.state.value} disabled={this.props.disabled} onChange={this.onValueChange} />
+        <TextField label={this.state.name} 
+          className={classes.sensor} 
+          id={this.state.id.toString()} 
+          value={this.state.value} 
+          disabled={this.props.disabled} 
+          onChange={this.onValueChange} />
       </FormControl>
     </div>
   }
 }
 
-export default SimulatedSensor;
+export default withStyles(styles)(SimulatedSensor);
