@@ -30,3 +30,19 @@ export async function sendSensorData(sensorId, value) {
     body: [JSON.stringify(body)]
   })
 }
+
+export async function fetchPressureThreshold(){
+  const rawResponse = await fetch(`${baseUrl}/pump/threshold`)
+  return await rawResponse.json()
+}
+
+export async function sendPressureThreshold(pressureThreshold) {
+  await fetch(`${baseUrl}/pump/threshold`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: pressureThreshold
+  })
+}
