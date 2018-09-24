@@ -18,7 +18,7 @@ export default function MapMarker({ sensor, badSpot, selected, onClick }) {
 
     return (
         <MarkerWithLabel position={{lat: sensor.latitude, lng: sensor.longitude}}
-                        icon={{ url: markerIconUrl(sensor) }}
+                        icon={{ url: markerIconUrl(badSpot) }}
                         labelAnchor={labelPosition}
                         labelStyle={labelStyle}
                         clickable={true}
@@ -31,8 +31,8 @@ export default function MapMarker({ sensor, badSpot, selected, onClick }) {
     )
 }
 
-function markerIconUrl(sensor) {
-    if (sensor.underSupplied) {
+function markerIconUrl(badSpot) {
+    if (badSpot) {
         return 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
     }
 
