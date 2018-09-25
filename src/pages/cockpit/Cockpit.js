@@ -9,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { withStyles } from '@material-ui/core/styles';
 
 import SimulatedSensor from './components/SimulatedSensor';
-import {sendSensorData, loadSensors, fetchPressureThreshold, sendPressureThreshold} from '../../services/SensorClient';
+import {sendMeasurement, loadSensors, fetchPressureThreshold, sendPressureThreshold} from '../../services/SensorClient';
 
 
 const styles = theme => ({
@@ -51,7 +51,7 @@ class Cockpit extends React.Component {
   componentDidMount() {
     this.loadAllSensors()
     this.loadPressureThreshold()
-    this.intervalJob = setInterval(this.simulateSensorData.bind(this), 5000)
+    this.intervalJob = setInterval(this.simulateSensor.bind(this), 5000)
   }
 
   async loadAllSensors(){
@@ -83,9 +83,9 @@ class Cockpit extends React.Component {
     sendPressureThreshold(this.state.pressureThreshold)
   }
 
-  async simulateSensorData(){
+  async simulateSensor(){
     if(this.state.runSimulation){
-      this.state.sensors.forEach(sensor => sendSensorData(sensor.id, sensor.value))
+      this.state.sensors.forEach(sensor => sendMeasurement(sensor.id, sensor.value))
     }
   }
 

@@ -20,7 +20,7 @@ export async function loadMeasurementsForSensor(sensorId) {
     return await rawResponse.json()
 }
 
-export async function sendSensorData(sensorId, value) {
+export async function sendMeasurement(sensorId, value) {
   const body = {
     'sensorId': sensorId,
     'value': value,

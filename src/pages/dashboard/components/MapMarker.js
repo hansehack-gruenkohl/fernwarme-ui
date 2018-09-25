@@ -25,7 +25,7 @@ export default function MapMarker({ sensor, badSpot, selected, onClick }) {
                         onClick={() => onClick(sensor.sensorId)}
                         key={sensor.url}>
             <div>
-              {(sensor.lastSensorData || {}).value} mBar {badSpot && <span>(SP)</span>}
+              {(sensor.lastMeasurement || {}).value} mBar {badSpot && <span>(SP)</span>}
             </div>
         </MarkerWithLabel>
     )
