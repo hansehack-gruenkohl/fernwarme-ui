@@ -10,6 +10,11 @@ export async function loadBadSpot() {
     return await rawResponse.json()
 }
 
+export async function loadBadSpotHistory() {
+  const rawResponse = await fetch(`${baseUrl}/badspot/history`)
+  return await rawResponse.json()
+}
+
 export async function loadMeasurementsForSensor(sensorId) {
     const rawResponse = await fetch(`${baseUrl}/sensors/${sensorId}/measurements`)
     return await rawResponse.json()
