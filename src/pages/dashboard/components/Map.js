@@ -4,13 +4,14 @@ import HeatmapLayer from "react-google-maps/lib/components/visualization/Heatmap
 import MapMarker from "./MapMarker";
 
 const url = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCU6Dz9ZWKxO8fkco490PHhipeqH2u13iw&v=3.exp&libraries=visualization,geometry,drawing,places"
-const RawMap = withScriptjs(withGoogleMap(({ sensors, badSpotSensor = {}, selectedSensor = {}, badSpotHistory = [], onSensorClick }) => (
+const RawMap = withScriptjs(withGoogleMap(({ sensors, badSpotSensor = {}, selectedSensor = {}, badSpotHistory = [], undersuppliedSpots = {}, onSensorClick }) => (
     
     <GoogleMap defaultZoom={14}
                defaultCenter={{ lat: 53.8554374, lng: 10.6783012 }}>
                {sensors.map(sensor =>( 
                <MapMarker sensor={sensor}
                  badSpot={sensor.sensorId === badSpotSensor.sensorId}
+                 undersupplied={(undersuppliedSpots.sensors.map((s) => s.sensorId)).includes(sensor.sensorId)}
                  selected={sensor.sensorId === selectedSensor.sensorId}
                  onClick={onSensorClick}
                  key={sensor.sensorId} />

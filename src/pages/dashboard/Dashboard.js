@@ -1,7 +1,7 @@
 import React from 'react';
 import SensorMetrics from './components/SensorMetrics';
 import Map from './components/Map';
-import {loadSensors, loadBadSpot, loadBadSpotHistory} from '../../services/SensorClient';
+import {loadSensors, loadBadSpot, loadBadSpotHistory, loadUndersuppliedSpots} from '../../services/SensorClient';
 import LoadingScreen from './components/LoadingScreen';
 
 export default class Dashboard extends React.Component {
@@ -21,6 +21,7 @@ export default class Dashboard extends React.Component {
     const sensors = await loadSensors()
     const badSpot = await loadBadSpot()
     const badSpotHistory = await loadBadSpotHistory()
+    const undersuppliedSpots = await loadUndersuppliedSpots()
 
     if(badSpot.underSupplied){
       (new Audio('/beep.mp3')).play().catch(error => {
@@ -33,7 +34,8 @@ export default class Dashboard extends React.Component {
     this.setState({
       sensors,
       badSpot,
-      badSpotHistory
+      badSpotHistory,
+      undersuppliedSpots
     })
   }
 
@@ -45,7 +47,7 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
-    const {sensors,badSpot, selectedSensorId, badSpotHistory} = this.state
+    const {sensors,badSpot, selectedSensorId, badSpotHistory, undersuppliedSpots} = this.state
     if (!sensors) {
       return <LoadingScreen />
       }
@@ -57,6 +59,7 @@ export default class Dashboard extends React.Component {
       <Map sensors={sensors}
         badSpotSensor={badSpotSensor}
         badSpotHistory={badSpotHistory}
+        undersuppliedSpots={undersuppliedSpots}
         selectedSensor={selectedSensor}
         onSensorClick={this.handleSensorClick}
         style={{flex: 1}} />
@@ -65,4 +68,3 @@ export default class Dashboard extends React.Component {
     </div>
     }
 }
-

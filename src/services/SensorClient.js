@@ -10,6 +10,11 @@ export async function loadBadSpot() {
     return await rawResponse.json()
 }
 
+export async function loadUndersuppliedSpots() {
+  const rawResponse = await fetch(`${baseUrl}/spots/undersupplied`)
+    return await rawResponse.json()
+}
+
 export async function loadBadSpotHistory() {
   const rawResponse = await fetch(`${baseUrl}/badspot/history`)
   return await rawResponse.json()

@@ -1,7 +1,7 @@
 import React from 'react';
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
 
-export default function MapMarker({ sensor, badSpot, selected, onClick }) {
+export default function MapMarker({ sensor, badSpot, undersupplied, selected, onClick }) {
 
     const labelPosition = new window.google.maps.Point(
                                 selected ? -15 : -17,
@@ -18,7 +18,7 @@ export default function MapMarker({ sensor, badSpot, selected, onClick }) {
 
     return (
         <MarkerWithLabel position={{lat: sensor.latitude, lng: sensor.longitude}}
-                        icon={{ url: markerIconUrl(badSpot) }}
+                        icon={{ url: markerIconUrl(badSpot, undersupplied) }}
                         labelAnchor={labelPosition}
                         labelStyle={labelStyle}
                         clickable={true}
@@ -31,9 +31,13 @@ export default function MapMarker({ sensor, badSpot, selected, onClick }) {
     )
 }
 
-function markerIconUrl(badSpot) {
+function markerIconUrl(badSpot, undersupplied) {
     if (badSpot) {
         return 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+    }
+    
+    if (undersupplied){
+      return 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
     }
 
     return 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
