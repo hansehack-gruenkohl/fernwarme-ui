@@ -3,10 +3,7 @@ import SensorMetrics from './components/SensorMetrics';
 import Map from './components/Map';
 import {loadSensors, loadBadSpot, loadBadSpotHistory, loadUndersuppliedSpots, fetchPressureThreshold } from '../../services/SensorClient';
 import LoadingScreen from './components/LoadingScreen';
-
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import InfoTile from './components/InfoTile';
 
 export default class Dashboard extends React.Component {
 
@@ -62,25 +59,11 @@ export default class Dashboard extends React.Component {
 
     return <div style={{ display: 'flex', height: '100vh', flexDirection: 'row wrap', flexWrap: 'wrap' }}>
       <div style={{ display: 'flex', width: '100%', height: '10%', justifyContent: 'center'}}>
-        <Card style={{ flex: '0 15%', height: '100%'}}>
-          <CardContent>
-            <Typography>Pressure Threshold</Typography>
-            <Typography variant="headline" component="h2">{ pressureThreshold } mBar</Typography>
-          </CardContent>
-        </Card>
-        <Card style={{ flex: '0 15%', height: '100%'}}>
-          <CardContent>
-            <Typography>Bad Spot Pressure</Typography>
-            <Typography variant="headline" component="h2">{ badSpot.measurement.value } mBar</Typography>
-          </CardContent>
-        </Card>
-        <Card style={{ flex: '0 15%', height: '100%'}}>
-          <CardContent>
-            <Typography>Undersupplied Spots</Typography>
-            <Typography variant="headline" component="h2">{ undersuppliedSpots.sensors.length }</Typography>
-          </CardContent>
-        </Card>
+        <InfoTile headline='Pressure Threshold' value={pressureThreshold} unit='mBar' />
+        <InfoTile headline='Bad Spot Pressure' value={badSpot.measurement.value} unit='mBar' />
+        <InfoTile headline='Undersupplied Spots' value={undersuppliedSpots.sensors.length} />
       </div>
+
       <Map sensors={sensors}
         badSpotSensor={badSpotSensor}
         badSpotHistory={badSpotHistory}
