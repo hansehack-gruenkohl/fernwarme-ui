@@ -1,9 +1,8 @@
 import React from 'react';
 import SensorMetrics from './components/SensorMetrics';
 import Map from './components/Map';
-import {loadSensors, loadBadSpot, loadBadSpotHistory, loadUndersuppliedSpots, fetchPressureThreshold } from '../../services/SensorClient';
+import {loadSensors, loadBadSpot, loadBadSpotHistory, loadUndersuppliedSpots} from '../../services/SensorClient';
 import LoadingScreen from './components/LoadingScreen';
-import InfoTile from './components/InfoTile';
 
 export default class Dashboard extends React.Component {
 
@@ -23,7 +22,6 @@ export default class Dashboard extends React.Component {
     const badSpot = await loadBadSpot()
     const badSpotHistory = await loadBadSpotHistory()
     const undersuppliedSpots = await loadUndersuppliedSpots()
-    const pressureThreshold = await fetchPressureThreshold()
 
     if(badSpot.underSupplied){
       (new Audio('/beep.mp3')).play().catch(error => {
@@ -37,8 +35,7 @@ export default class Dashboard extends React.Component {
       sensors,
       badSpot,
       badSpotHistory,
-      undersuppliedSpots,
-      pressureThreshold
+      undersuppliedSpots
     })
   }
 
@@ -49,7 +46,7 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
-    const {sensors,badSpot, selectedSensorId, badSpotHistory, undersuppliedSpots, pressureThreshold} = this.state
+    const {sensors,badSpot, selectedSensorId, badSpotHistory, undersuppliedSpots} = this.state
     if (!sensors) {
       return <LoadingScreen />
       }
@@ -58,21 +55,15 @@ export default class Dashboard extends React.Component {
     const selectedSensor = sensors.filter(s => s.sensorId === selectedSensorId)[0]
 
     return <div style={{ display: 'flex', height: '100vh', flexDirection: 'row wrap', flexWrap: 'wrap' }}>
-      <div style={{ display: 'flex', width: '100%', height: '10%', justifyContent: 'center'}}>
-        <InfoTile headline='Pressure Threshold' value={pressureThreshold} unit='mBar' />
-        <InfoTile headline='Bad Spot Pressure' value={badSpot.measurement.value} unit='mBar' />
-        <InfoTile headline='Undersupplied Spots' value={undersuppliedSpots.sensors.length} />
-      </div>
-
       <Map sensors={sensors}
         badSpotSensor={badSpotSensor}
         badSpotHistory={badSpotHistory}
         undersuppliedSpots={undersuppliedSpots}
         selectedSensor={selectedSensor}
         onSensorClick={this.handleSensorClick}
-        style={{height: '90%', flex: '1 70%'}} />
+        style={{height: '90%', flex: '1 80%'}} />
 
-      <SensorMetrics sensor={selectedSensor} style={{ width: '30%' }}/>
+      <SensorMetrics sensor={selectedSensor} style={{ width: '20%' }}/>
     </div>
     }
 }
