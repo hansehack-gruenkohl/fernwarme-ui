@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 
 import Dashboard from './pages/dashboard/Dashboard';
 import Cockpit from './pages/cockpit/Cockpit';    
+import InfoBox from './InfoBox'
 
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,12 +23,13 @@ const styles = {
     menuButton: {
           marginLeft: -12,
           marginRight: 20,
-        },
+    }
 };
 
-class App extends Component {
+class App extends React.Component {
   state = {
     anchorEl: null,
+    badSpot: null
   };
 
   handleMenu = event => {
@@ -39,12 +41,11 @@ class App extends Component {
   };
 
   render() {
-
-const { classes } = this.props;
+    const { classes } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
-      
+
     const renderMenu = <Menu id="menu-appbar"
         anchorEl={anchorEl}
         aria-owns={open ? 'material-appbar' : null}
@@ -83,6 +84,7 @@ const { classes } = this.props;
                       aria-label="Menu">
                       <MenuIcon />
                     </IconButton>
+                    <InfoBox />
                   </Toolbar>
                 </AppBar>
                 {renderMenu}
